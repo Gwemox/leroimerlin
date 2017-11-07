@@ -33,12 +33,12 @@ Tag.create(
   name: 'Summer'
 )
 
-Picture.create(
+Category.create(
   name: "People"
 )
-Picture.create(
+Category.create(
   name: "Travel"
 )
-Picture.create(
+Category.create(
   name: "Food"
 )
