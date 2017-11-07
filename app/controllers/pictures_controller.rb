@@ -6,7 +6,7 @@ class PicturesController < ApplicationController
 
   def create
     @picture = Picture.new(picture_params)
-
+        
     respond_to do |format|
       if @picture.save
         format.html { redirect_to @picture, notice: 'Category was successfully created.' }

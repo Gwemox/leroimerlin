@@ -1,2 +1,7 @@
-%p Lorem ipsum...
 %section{id: 'photos'}
+  - @pictures.each do |picture|
+    .container-picture
+      .tag
+        = heart('red', 20)
+        = picture.id
+      %img{src:picture.picture.url}
