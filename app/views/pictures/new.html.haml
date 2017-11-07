@@ -1,0 +1,17 @@
+.row
+  .col-xs-8.col-xs-offset-2.well
+    /*- if user_signed_in?*/
+    = form_for @picture, class: 'form', html: {multipart: true} do |f|
+      .form-group
+        = f.label :picture, class: 'form-label required'
+        = f.file_field :picture, class: 'form-control'
+      .form-group
+        = f.label :category_id, class: 'form-label required'
+        = f.collection_select :category_id, Category.all, :id, :name, {}, {class: 'form-control'}
+      .form-group
+        - Tag.all.each do |tag|
+          %div.some{ :style => "width: 100px; display: inline-block;" }
+            = check_box_tag 'picture[tag_ids][]', tag.id
+            = tag.name
+      .form-group
+        = f.submit 'ajouter la photo', class: 'btn btn-primary center-block'

@@ -1,4 +1,4 @@
 class Linkpicturetag < ApplicationRecord
   belongs_to :picture
-  has_many :tags
+  belongs_to :tag
 end
