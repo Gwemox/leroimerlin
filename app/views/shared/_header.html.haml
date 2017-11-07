@@ -4,16 +4,18 @@
       .col-xs-2
         %h1.title
           %a{:href => root_path} LeRoiMerlin
-      .col-xs-10.text-center
-        %div.pull-right
-          - if user_signed_in?
-            %a.logout{href: destroy_user_session_path, data: {method: 'delete'}}
-              %button.btn.btn-success
-                Se deconnecer
+      .col-xs-7
+        - Category.all.each do |category|
+          = link_to category.name, "#"
+      .col-xs-3
+        - if user_signed_in?
+          %a.logout{href: destroy_user_session_path, data: {method: 'delete'}}
             %button.btn.btn-success
-              Uploader une image
-          - else
-            %a.my-account{href: new_user_session_path}
-              %button.btn.btn-success
-                Se connecter
+              Se deconnecer
+          %button.btn.btn-success
+            Uploader une image
+        - else
+          %a.my-account{href: new_user_session_path}
+            %button.btn.btn-success
+              Se connecter
       .clearfix
