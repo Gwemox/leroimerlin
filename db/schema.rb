@@ -23,7 +23,6 @@ ActiveRecord::Schema.define(version: 20171107130036) do
 
   create_table "pictures", force: :cascade do |t|
     t.string "picture"
-    t.integer "linkpicturetags_id"
     t.integer "category_id"
     t.integer "user_id"
     t.datetime "created_at", null: false
