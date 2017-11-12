@@ -4,7 +4,7 @@
     = form_for @picture, class: 'form', html: {multipart: true} do |f|
       .form-group
         = f.label :picture, class: 'form-label required'
-        = f.file_field :picture, class: 'form-control'
+        = f.file_field :picture, class: 'form-control', required: true
       .form-group
         = f.label :category_id, class: 'form-label required'
         = f.collection_select :category_id, Category.all, :id, :name, {}, {class: 'form-control'}

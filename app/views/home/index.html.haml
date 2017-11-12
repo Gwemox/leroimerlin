@@ -1,7 +1,9 @@
 %section{id: 'photos'}
   - @pictures.each do |picture|
-    .container-picture
-      .tag
-        = heart('red', 20)
-        = picture.id
-      %img{src:picture.picture.url}
+    - if picture.picture.url
+      .container-picture
+        .tag
+          = heart('red', 20)
+          = picture.id
+        %a{href: picture.picture.url, data: {lightbox: picture.category.name}}
+          %img{src:picture.picture.url}
