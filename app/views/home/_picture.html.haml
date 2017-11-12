@@ -1,0 +1,23 @@
+- @pictures.each do |picture|
+  - if picture.picture.url
+    .container-picture
+      .tag{id: "image-#{picture.id}"}
+        .container-fluid
+          .row
+            .col-xs-2
+              - if user_signed_in?
+                %a{href: '#', class: "like #{'liked' if current_user.voted_for? picture}", data: {do: 'like', id: picture.id}}
+                  = heart('grey', 30)
+              - else
+                %a.my-account{href: new_user_session_path}
+                  = heart('red', 30)
+            .col-xs-1{id: "nb-like-#{picture.id}"}
+              = picture.get_likes.size
+            .col-xs-5
+              - picture.tags.each do |tag|
+                = link_to tag.name, picture_by_tag_path(tag.id)
+            .col-xs-4
+              = link_to "Postée par #{picture.user.pseudo}", picture_by_user_path(picture.user.pseudo, picture.user.id)
+
+      %a{href: picture.picture.url, data: {lightbox: picture.category.name}}
+        %img{src:picture.picture.url}

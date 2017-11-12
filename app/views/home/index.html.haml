@@ -1,9 +1,19 @@
-%section{id: 'photos'}
-  - @pictures.each do |picture|
-    - if picture.picture.url
-      .container-picture
-        .tag
-          = heart('red', 20)
-          = picture.id
-        %a{href: picture.picture.url, data: {lightbox: picture.category.name}}
-          %img{src:picture.picture.url}
+- if @pictures.count > 0
+  %section{id: 'photos'}
+    =render partial: "picture"
+  .container-fluid
+    .row.text-center
+      %a.my-account{href: "#", data: {do: 'more'}}
+        %button.btn.btn-success
+          Afficher plus
+- else
+  .alert.alert-danger.text-center
+    Aucune image trouvée !
+
+:javascript
+  if ("#{@pictures.last}" != "#{nil}"){
+    window.last = "#{@pictures.last.try(:id)}"
+  }
+  else{
+    window.last = 0
+  }

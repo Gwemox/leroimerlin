@@ -6,10 +6,10 @@ class PicturesController < ApplicationController
 
   def create
     @picture = Picture.new(picture_params)
-        
+
     respond_to do |format|
       if @picture.save
-        format.html { redirect_to @picture, notice: 'Category was successfully created.' }
+        format.html { redirect_to my_picture_path }
         format.json { render :show, status: :created, location: @picture }
       else
         format.html { render :new }
@@ -18,6 +18,9 @@ class PicturesController < ApplicationController
     end
   end
 
+  def show
+    @picture = Picture.find(params[:picture_id])
+  end
 
   private
 
