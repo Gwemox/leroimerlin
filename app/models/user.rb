@@ -21,6 +21,8 @@ class User < ApplicationRecord
     result[:success] =  true
     result[:number_like] = image.get_likes.size
 
+    ActionCable.server.broadcast "like_channel", type: 'stats-like', picture_id: picture_id, likes: image.get_likes.size
+
     return result
   end
 

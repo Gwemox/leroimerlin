@@ -1,22 +1,52 @@
-.container-fluid.header
-  .row
-    .top
-      .col-xs-3.text-center
-        %h1.title
-          %a{:href => root_path} LeRoiMerlin
-      .col-xs-6
+-# .header
+-#   .container-fluid.header
+-#     .row
+-#       .top
+-#         .col-xs-3.text-center
+-#           %h1.title
+-#             %a{:href => root_path} LeRoiMerlin
+-#         .col-xs-3
+-#           - Category.all.each do |category|
+-#             = link_to category.name, picture_by_cayegory_path(category.id), class: "link-category"
+-#         .col-xs-3
+-#           = form_tag(search_picture_path, method: "get") do
+-#             = text_field_tag(:search)
+-#         .col-xs-3.text-center
+-#           - if user_signed_in?
+-#             %a.logout{href: destroy_user_session_path, data: {method: 'delete'}}
+-#               %button.btn.btn-success
+-#                 Se deconnecer
+-#             %a{href: new_picture_path}
+-#               %button.btn.btn-success
+-#                 Uploader une image
+-#           - else
+-#             %a.my-account{href: new_user_session_path}
+-#               %button.btn.btn-success
+-#                 Se connecter
+-#         .clearfix
+-#
+%nav.navbar.navbar-default.navbar-fixed-top
+  .container
+    .col-xs-4
+      %a.navbar-brand{href: root_path}
+        LeRoiMerlin
+      %ul.nav.navbar-nav
         - Category.all.each do |category|
-          = link_to category.name, picture_by_cayegory_path(category.id), class: "link-category"
-      .col-xs-3.text-center
-        - if user_signed_in?
-          %a.logout{href: destroy_user_session_path, data: {method: 'delete'}}
-            %button.btn.btn-success
-              Se deconnecer
-          %a{href: new_picture_path}
-            %button.btn.btn-success
-              Uploader une image
-        - else
-          %a.my-account{href: new_user_session_path}
-            %button.btn.btn-success
-              Se connecter
-      .clearfix
+          %li
+            %a{href: picture_by_cayegory_path(category.id)}
+              = category.name
+    .col-xs-4
+      %form.navbar-form.navbar-left{action: search_picture_path, method: "get", style: "width: 100%;"}
+        %input.form-control{type: "text", name: "search", placeholder: "Rechercher...", style: "width: 100%;", value: "#{@text_search if @text_searchl}"}
+    .col-xs-4.buttons-menu-top
+      - if user_signed_in?
+        %a.logout{href: destroy_user_session_path, data: {method: 'delete'}}
+          %button.btn.btn-success.pull-right
+            Se deconnecer
+        %a{href: new_picture_path}
+          %button.btn.btn-success.pull-right
+            Uploader une image
+      - else
+        %a.my-account{href: new_user_session_path}
+          %button.btn.btn-success.pull-right
+            Se connecter

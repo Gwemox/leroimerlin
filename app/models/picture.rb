@@ -9,32 +9,36 @@ class Picture < ApplicationRecord
   attr_accessor :liked
   acts_as_votable
 
-  def self.searchByUser(args)
+  def self.search(args)
     out = []
-    search = args[:search_user]
-    out = Picture.joins(:user).where(["users.pseudo LIKE :query", query: "%#{search.capitalize}%"]).order('images.id DESC')
+    @text_search = args[:search]
+    if @text_search.first == "#"
+      @text_search[0] = ''
+      out = Picture.joins(:linkpicturetags).joins(:tags).where(["UPPER(tags.name) LIKE :query", query: "%#{@text_search.capitalize}%"])
+    else
+      out = Picture.joins(:user).where(["UPPER(users.pseudo) LIKE :query", query: "%#{@text_search.upcase}%"])
+    end
     return out.limit(6)
   end
 
   def self.filter(args)
     out = []
-    if args[:search_user].present?
-        out = searchByUser(args)
+    if args[:search].present?
+        out = search(args)
     elsif args[:category_id].present?
-        out = Picture.where(["category_id = ?",args[:category_id]]).order('id DESC')
-    elsif args[:picture_id].present?
-        out = Picture.where(["id = ?",args[:image_id]]).order('id DESC')
+        out = Picture.where("category_id = ?", args[:category_id])
     elsif args[:tag_id].present?
-        out = Picture.joins(:linkpicturetags).where(["tag_id = ?",args[:tag_id]])
+        out = Picture.joins(:linkpicturetags).where("linkpicturetags.tag_id = ?", args[:tag_id])
     elsif args[:user_id].present?
-        out = Picture.where(["user_id = ?",args[:user_id]]).order('id DESC')
+        out = Picture.where("user_id = ?", args[:user_id])
     else
-        out = Picture.all.order('id DESC')
+        out = Picture.all
     end
 
     if args[:last_id].present?
-        out = out.where("id < ?", args[:last_id]).order('id DESC')
+        out = out.where("id < ?", args[:last_id])
     end
-    return out.limit(6)
+
+    return out.order('pictures.id DESC').limit(6)
   end
 end
