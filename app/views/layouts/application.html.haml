@@ -13,6 +13,12 @@
     .header
       = render partial: '/shared/header'
     .container.content
+      - if notice
+        %p.notice.alert-info.text-center
+          = notice
+      - if alert
+        %p.alert.alert-danger.text-center
+          = alert
       = yield
 
       = render partial: '/shared/footer'
