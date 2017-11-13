@@ -3,7 +3,7 @@
     =render partial: "picture"
   .container-fluid
     .row.text-center
-      %a.my-account{href: "#", data: {do: 'more'}}
+      %a{href: "#", data: {do: 'more'}, id: "more-button"}
         %button.btn.btn-success
           Afficher plus
 - else
